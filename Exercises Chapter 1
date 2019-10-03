@@ -1,0 +1,25 @@
+wisc_lottery<-read.csv("N:\\ACTUARIAL\\Private\\RODOLFO\\RODOLFO\\SRM\\Data Statistical Modeling\\WiscLottery.csv")
+View(wisc_lottery)
+
+summary(wisc_lottery$SALES)
+summary(wisc_lottery$POP)
+
+#Para ver varias graficas en un mismo Viewer
+attach(mtcars)
+par(mfrow=c(2,2))
+
+hist(wisc_lottery$SALES,main="Sales")
+hist(wisc_lottery$POP,main="Population")
+
+#How can we see the relationship between two variables? SCATTER PLOT
+plot(wisc_lottery$POP,wisc_lottery$SALES,main="Scatter Plot",xlab="Population",ylab="Sales")
+
+#How strong is this relationship?
+#We can know it with the correlation statistic
+cor(wisc_lottery$POP,wisc_lottery$SALES)
+
+data2<-matrix(c(1,2,3,4,5,-2,-1,0,1,2,4,1,0,1,4),ncol=3,nrow=5)
+data2<-data.frame(data2)
+data2
+
+cor(data2$X2,data2$X3)
