@@ -1,0 +1,83 @@
+#EXERCISE 1.- MEPS HEALTH EXPENDITURES
+
+#-----------PART 1------------------------------------
+datos<-read.csv("N:\\ACTUARIAL\\Private\\RODOLFO\\RODOLFO\\SRM\\Data Statistical Modeling\\HealthExpend.csv")
+
+datos1<-datos[datos$EXPENDIP>0,] #positive inpatient expenditures
+
+summary(datos1$EXPENDIP)
+
+desvest<-sd(datos1$EXPENDIP)
+media<-mean(datos1$EXPENDIP)
+
+#How does the standar deviation compare to the mean? Do the data appear to be skewed?
+desvest/media
+
+#Compute  box plot, histogram and a qq plot
+boxplot(datos1$EXPENDIP,main="Positive Inpatient Expenditures", border="blue") #it can be shown that we have an outlier
+hist(datos1$EXPENDIP,main="Positive Inpatient Expenditures",xlab="Inpatient Expenditures")
+qqnorm(datos1$EXPENDIP,pch=1)
+qqline(datos1$EXPENDIP,col="steelblue")
+
+#Tranformations
+#Square root
+transform1<-sqrt(datos1$EXPENDOP)
+
+hist(transform1,main="Positive Inpatient Exp / Squared root Tranform",xlab="Inpatient Expenditures")
+qqnorm(transform1,pch=1,main="Positive Inpatient Exp / Squared root Tranform")
+qqline(transform1,col="steelblue")
+
+#Logarithmic
+transform2<-log(datos1$EXPENDOP,base=exp(1))
+
+hist(transform2,main="Positive Inpatient Exp / Natural Log Tranform",xlab="Inpatient Expenditures")
+qqnorm(transform2,pch=1,main="Positive Inpatient Exp / Natural Log Tranform")
+qqline(transform2,col="steelblue")
+#it looks more symmetric than the previous ones
+#------------------------------------------------------
+
+#-----------PART 2---------------------------------------
+
+datos2<-datos[datos$EXPENDOP>0,]#positive inpatient expenditures
+summary(datos2)
+length(datos2$AGE) #1352 individuals
+
+summary(datos2$EXPENDOP)
+desvest2<-sd(datos2$EXPENDOP)
+media2<-mean(datos2$EXPENDOP)
+
+boxplot(datos2$EXPENDOP,main="Positive Outpatient Expenditures", border="blue")
+hist(datos2$EXPENDOP,main="Positive Outpatient Expenditures",xlab="Outpatient Expenditures")
+qqnorm(datos2$EXPENDOP,pch=1)
+qqline(datos2$EXPENDOP,col="steelblue")
+
+#Logarithmic
+transform3<-log(datos2$EXPENDOP,base=exp(1))
+
+hist(transform3,main="Positive Outpatient Exp / Natural Log Tranform",xlab="Inpatient Expenditures")
+qqnorm(transform3,pch=1,main="Positive Outpatient Exp / Natural Log Tranform")
+qqline(transform3,col="steelblue")
+
+#--------------------------------------------------------
+
+
+#EXERCISE 2.- AUTOMOBILE INSURANCE CLAIMS
+
+auto_claims<-read.csv("N:\\ACTUARIAL\\Private\\RODOLFO\\RODOLFO\\SRM\\Data Statistical Modeling\\AutoClaims.csv")
+head(auto_claims)
+
+sample_auto<-auto_claims[auto_claims$AGE>=50,]
+summary(sample_auto) #There are 6773 drivers older or equal than 50 years
+
+hist(sample_auto$PAID,main="Automobile Insurance Claims, 50 years old drivers")
+
+#Create a new column with a transformation of Paid column
+sample_auto<-cbind(sample_auto,LNPAID=log(sample_auto$PAID,exp(1)))  
+
+hist(sample_auto$LNPAID,main="Automobile Insurance Claims Transformed, 50 years old drivers")
+abline(v=mean(sample_auto$LNPAID),col="green")
+
+qqnorm(sample_auto$LNPAID,main="Automobile Insurance Claims Transformed, 50 years old drivers",pch=1)
+qqline(sample_auto$LNPAID, col="steelblue")
+#the distribution of LnPaid is more symmetric than Paid
+#the distribution of the data is right skewed, there are more mass at the left
